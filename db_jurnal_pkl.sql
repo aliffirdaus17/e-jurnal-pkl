@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `absensi`
 --
-
+USE railway;
 CREATE TABLE `absensi` (
   `id` int(11) NOT NULL,
   `siswa_id` int(11) NOT NULL,
