@@ -1,15 +1,17 @@
+import os
 import mysql.connector
 from mysql.connector import Error
 
 class Config:
-    # Pengaturan Database MySQL
-    MYSQL_HOST = 'localhost'
-    MYSQL_USER = 'root'
-    MYSQL_PASSWORD = ''  # UBAH SESUAI PASSWORD MYSQL ANDA
-    MYSQL_DB = 'db_jurnal_pkl'
+    # Mengambil dari Railway jika ada, jika tidak (di laptop) pakai 'localhost'
+    MYSQL_HOST = os.environ.get('MYSQLHOST', 'localhost')
+    MYSQL_USER = os.environ.get('MYSQLUSER', 'root')
+    MYSQL_PASSWORD = os.environ.get('MYSQLPASSWORD', '') 
+    MYSQL_DB = os.environ.get('MYSQLDATABASE', 'db_jurnal_pkl')
+    MYSQL_PORT = int(os.environ.get('MYSQLPORT', 3306))
     
-    # Secret key untuk Flask session (akan digunakan di Tahap 2)
-    SECRET_KEY = 'jurnal-pkl-rpl-secret-key-super-aman'
+    # Secret key untuk Flask session
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'jurnal-pkl-rpl-secret-key-super-aman')
     
     # Pengaturan Upload File
     UPLOAD_FOLDER = 'uploads'
@@ -22,7 +24,8 @@ def get_db_connection():
             host=Config.MYSQL_HOST,
             user=Config.MYSQL_USER,
             password=Config.MYSQL_PASSWORD,
-            database=Config.MYSQL_DB
+            database=Config.MYSQL_DB,
+            port=Config.MYSQL_PORT
         )
         if connection.is_connected():
             return connection
@@ -30,11 +33,11 @@ def get_db_connection():
         print(f"Error saat membuat koneksi ke MySQL: {e}")
         return None
 
-# Skrip pengujian koneksi saat file diksekusi langsung
+# Skrip pengujian koneksi saat file dieksekusi langsung
 if __name__ == '__main__':
     conn = get_db_connection()
     if conn and conn.is_connected():
-        print("[SUCCESS] Koneksi database db_jurnal_pkl BERHASIL!")
+        print("[SUCCESS] Koneksi database BERHASIL!")
         conn.close()
     else:
-        print("[FAILED] Gagal terhubung ke database. Periksa konfigurasi MySQL Anda.")
+        print("[FAILED] Gagal terhubung ke database.")
