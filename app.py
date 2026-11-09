@@ -552,7 +552,7 @@ def absensi():
             cursor.execute("""
                 INSERT INTO pengajuan_absensi 
                 (siswa_id, tanggal, jenis, alasan, status_pengajuan, created_at)
-                VALUES (%s, %s, 'Terlambat', %s, 'Pending', NOW())
+                VALUES (%s, %s, 'Terlambat', %s, 'Pending', now(WIB))
             """, (siswa_id, today_str, keterangan))
             
             conn.commit()
@@ -585,7 +585,7 @@ def absensi():
 
                 cursor.execute("""
                     INSERT INTO absensi (siswa_id, tanggal, status, keterangan, foto_bukti, lokasi, is_manual, created_at) 
-                    VALUES (%s, %s, 'Hadir', %s, %s, %s, 0, NOW())
+                    VALUES (%s, %s, 'Hadir', %s, %s, %s, 0, now(WIB))
                 """, (siswa_id, today_str, ket_simpan, filename_db, lokasi))
                 
                 conn.commit()
@@ -1538,7 +1538,7 @@ def absen_manual_pembimbing():
     # 3. Simpan Absen Manual
     cursor.execute("""
         INSERT INTO absensi (siswa_id, tanggal, status, keterangan, is_manual, created_at)
-        VALUES (%s, %s, %s, %s, 1, NOW())
+        VALUES (%s, %s, %s, %s, 1, now(WIB))
     """, (siswa_id, tanggal, status, keterangan))
     
     conn.commit()
