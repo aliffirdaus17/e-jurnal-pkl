@@ -6,11 +6,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 from datetime import date, datetime
-import pytz
-
-os.environ['TZ'] = 'Asia/Jakarta'
-if hasattr(time, 'tzset'):
-    time.tzset()
+import pytz  # <--- Tambahkan ini untuk mengatur zona waktu
 
 from flask import (
     Flask,
@@ -33,14 +29,13 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-# =========================================================
-# PERBAIKAN: Tentukan Absolute Path & Ekstensi File yang Diizinkan
-# =========================================================
-# Menyimpan direktori upload secara absolut di folder static/uploads/profil
 UPLOAD_FOLDER_PROFIL = os.path.join(app.root_path, 'static', 'uploads', 'profil')
 app.config['UPLOAD_FOLDER_PROFIL'] = UPLOAD_FOLDER_PROFIL
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
+
+# Definisikan zona waktu WIB untuk digunakan di fungsi absensi nanti
+WIB = pytz.timezone('Asia/Jakarta')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
