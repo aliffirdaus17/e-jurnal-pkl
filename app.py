@@ -514,7 +514,7 @@ def absensi():
     cursor = conn.cursor(dictionary=True)
 
     # Cek jam sekarang
-    jam_sekarang = datetime.now().time()
+    jam_sekarang = datetime.now(WIB).time()
     batas_waktu = datetime.strptime("09:30:00", "%H:%M:%S").time()
     is_terlambat = jam_sekarang >= batas_waktu
 
@@ -733,7 +733,7 @@ def laporan_tambah():
 
     siswa_id = session.get('siswa_id')
     today_str = date.today().strftime('%Y-%m-%d')
-    now = datetime.now()
+    now = datetime.now(WIB)
     is_terlambat = now.hour >= 11
 
     conn = get_db_connection()
