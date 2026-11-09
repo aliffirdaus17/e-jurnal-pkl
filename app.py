@@ -552,8 +552,8 @@ def absensi():
             cursor.execute("""
                 INSERT INTO pengajuan_absensi 
                 (siswa_id, tanggal, jenis, alasan, status_pengajuan, created_at)
-                VALUES (%s, %s, 'Terlambat', %s, 'Pending', now(WIB))
-            """, (siswa_id, today_str, keterangan))
+                VALUES (%s, %s, 'Terlambat', %s, 'Pending', %s)
+            """, (siswa_id, today_str, keterangan, waktu_sekarang_wib.strftime('%Y-%m-%d %H:%M:%S')))
             
             conn.commit()
             flash('Pengajuan terlambat telah dikirim ke Pembimbing. Silakan tunggu persetujuan (ACC).', 'warning')
@@ -585,8 +585,8 @@ def absensi():
 
                 cursor.execute("""
                     INSERT INTO absensi (siswa_id, tanggal, status, keterangan, foto_bukti, lokasi, is_manual, created_at) 
-                    VALUES (%s, %s, 'Hadir', %s, %s, %s, 0, now(WIB))
-                """, (siswa_id, today_str, ket_simpan, filename_db, lokasi))
+                    VALUES (%s, %s, 'Hadir', %s, %s, %s, 0, %s)
+                """, (siswa_id, today_str, ket_simpan, filename_db, lokasi, waktu_sekarang_wib.strftime('%Y-%m-%d %H:%M:%S')))
                 
                 conn.commit()
                 flash('Presensi selfie berhasil disimpan!', 'success')
