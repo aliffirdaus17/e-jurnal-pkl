@@ -6,6 +6,11 @@ import openpyxl
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 from datetime import date, datetime
+import pytz
+
+os.environ['TZ'] = 'Asia/Jakarta'
+if hasattr(time, 'tzset'):
+    time.tzset()
 
 from flask import (
     Flask,
